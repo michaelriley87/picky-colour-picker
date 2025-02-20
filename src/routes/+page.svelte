@@ -10,6 +10,7 @@
     l: number;
   }
 
+  // initial colours
   const initialHexColours: HSLColor[] = [
     { h: 240, s: 60, l: 50 }, { h: 120, s: 60, l: 50 },
     { h: 270, s: 60, l: 50 }, { h: 60, s: 60, l: 50 },
@@ -22,11 +23,13 @@
   let initialized: boolean = false;
   let savedColors: HSLColor[] = browser ? JSON.parse(localStorage.getItem("savedColors") || "[]") : [];
 
+  // set internal hex colour as selected external hex colour
   function selectColor(index: number): void {
     centerColor = { ...hexColours[index] };
     initialized = true;
   }
 
+  // reset colours to initial state
   function resetColors(): void {
     hexColours = [...initialHexColours];
     centerColor = { h: 0, s: 0, l: 50 };
@@ -34,38 +37,45 @@
     initialized = false;
   }
 
+  // convert HSL colour to hex for display
   function convertToHex(color: HSLColor): string {
     return formatHex({ mode: "hsl", h: color.h, s: color.s / 100, l: color.l / 100 });
   }
 
+  // save the current center colour to the saved colours list
   function saveCenterColor(): void {
     if (!initialized) return;
     savedColors = [{ ...centerColor }, ...savedColors.filter(c => convertToHex(c) !== convertToHex(centerColor))];
   }
 
+  // copy hex colour to clipboard
   function copyColor(hex: string): void {
     navigator.clipboard.writeText(hex);
   }
 
+  // delete a saved colour from the saved colours list
   function deleteColor(index: number): void {
     savedColors = savedColors.filter((_, i) => i !== index);
   }
 
+  // clear all saved colours
   function clearSavedColors(): void {
     savedColors = [];
   }
 
+  // calculate new external hex colours based on the center colour
   $: if (initialized) {
     hexColours = [
-      { ...centerColor, l: Math.max(centerColor.l - modValue, 0) },
-      { ...centerColor, s: Math.min(centerColor.s + modValue, 100) },
-      { ...centerColor, h: (centerColor.h - modValue + 360) % 360 },
-      { ...centerColor, h: (centerColor.h + modValue) % 360 },
-      { ...centerColor, s: Math.max(centerColor.s - modValue, 0) },
-      { ...centerColor, l: Math.min(centerColor.l + modValue, 100) }
+      { ...centerColor, l: Math.max(centerColor.l - modValue, 0) },   // lightness -
+      { ...centerColor, s: Math.min(centerColor.s + modValue, 100) }, // saturation +
+      { ...centerColor, h: (centerColor.h - modValue + 360) % 360 },  // hue -
+      { ...centerColor, h: (centerColor.h + modValue) % 360 },        // hue +
+      { ...centerColor, s: Math.max(centerColor.s - modValue, 0) },   // saturation -
+      { ...centerColor, l: Math.min(centerColor.l + modValue, 100) }  // lightness +
     ];
   }
 
+  // store the saved colours in local storage
   $: if (browser) {
     localStorage.setItem("savedColors", JSON.stringify(savedColors));
   }
@@ -102,7 +112,6 @@
       <span class="hex-label">Lighten</span>
     </button>
   </div>
-  
   <div class="knob-container">
     <Knob 
       bind:value={modValue}
