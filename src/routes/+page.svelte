@@ -83,7 +83,7 @@
 
 <main>
   <div>
-    <img src="/header.png" alt="Picky - Colour Picker" class="header"/>
+    <img src="header.png" alt="Picky - Colour Picker" class="header"/>
   </div>
   <div class="hex-container">
     <button class="hex {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[0].h}, {hexColours[0].s}%, {hexColours[0].l}%);" on:click={() => selectColor(0)} type="button">
