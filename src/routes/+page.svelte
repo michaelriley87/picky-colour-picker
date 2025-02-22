@@ -81,38 +81,38 @@
   }
 </script>
 
-<main>
-  <div>
-    <img src="header.png" alt="Picky - Colour Picker" class="header"/>
+<main class="page">
+  <div class="header-container">
+    <img src="header.png" alt="Picky - Colour Picker" class="header-img"/>
   </div>
-  <div class="hex-container">
-    <button class="hex {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[0].h}, {hexColours[0].s}%, {hexColours[0].l}%);" on:click={() => selectColor(0)} type="button">
+  <div class="hex-row">
+    <button class="hex-button {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[0].h}, {hexColours[0].s}%, {hexColours[0].l}%);" on:click={() => selectColor(0)} type="button">
       <span class="hex-label">Darken</span>
     </button>
-    <button class="hex {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[1].h}, {hexColours[1].s}%, {hexColours[1].l}%);" on:click={() => selectColor(1)} type="button">
+    <button class="hex-button {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[1].h}, {hexColours[1].s}%, {hexColours[1].l}%);" on:click={() => selectColor(1)} type="button">
       <span class="hex-label">Saturate</span>
     </button>
   </div>
-  <div class="hex-container">
-    <button class="hex {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[2].h}, {hexColours[2].s}%, {hexColours[2].l}%);" on:click={() => selectColor(2)} type="button">
+  <div class="hex-row">
+    <button class="hex-button {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[2].h}, {hexColours[2].s}%, {hexColours[2].l}%);" on:click={() => selectColor(2)} type="button">
       <span class="hex-label">Hue -</span>
     </button>
-    <button class="hex center {initialized ? 'initialized' : ''}" style="background-color: hsl({centerColor.h}, {centerColor.s}%, {centerColor.l}%);" on:click={saveCenterColor} type="button">
+    <button class="hex-button hex-center {initialized ? 'initialized' : ''}" style="background-color: hsl({centerColor.h}, {centerColor.s}%, {centerColor.l}%);" on:click={saveCenterColor} type="button">
       <span class="hex-label">{convertToHex(centerColor)}</span>
     </button>
-    <button class="hex {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[3].h}, {hexColours[3].s}%, {hexColours[3].l}%);" on:click={() => selectColor(3)} type="button">
+    <button class="hex-button {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[3].h}, {hexColours[3].s}%, {hexColours[3].l}%);" on:click={() => selectColor(3)} type="button">
       <span class="hex-label">Hue +</span>
     </button>
   </div>
-  <div class="hex-container">
-    <button class="hex {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[4].h}, {hexColours[4].s}%, {hexColours[4].l}%);" on:click={() => selectColor(4)} type="button">
+  <div class="hex-row">
+    <button class="hex-button {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[4].h}, {hexColours[4].s}%, {hexColours[4].l}%);" on:click={() => selectColor(4)} type="button">
       <span class="hex-label">Desaturate</span>
     </button>
-    <button class="hex {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[5].h}, {hexColours[5].s}%, {hexColours[5].l}%);" on:click={() => selectColor(5)} type="button">
+    <button class="hex-button {initialized ? 'initialized' : ''}" style="background-color: hsl({hexColours[5].h}, {hexColours[5].s}%, {hexColours[5].l}%);" on:click={() => selectColor(5)} type="button">
       <span class="hex-label">Lighten</span>
     </button>
   </div>
-  <div class="knob-container">
+  <div class="control-panel">
     <Knob 
       bind:value={modValue}
       min={1}
@@ -123,22 +123,22 @@
       color="white"
       bgColor="rgba(255,255,255,0.2)"
     />
-    <p>Variation: {modValue}</p>
-    <button on:click={resetColors}>Reset</button>
+    <p class="control-label">Variation: {modValue}</p>
+    <button class="action-button" on:click={resetColors}>Reset</button>
   </div>
-  <div class="saved-colors">
+  <div class="saved-list">
     {#each savedColors as color, index}
-      <div class="saved-color" style="background-color: hsl({color.h}, {color.s}%, {color.l}%);">
-        <span>{convertToHex(color)}</span>
-        <button on:click={() => copyColor(convertToHex(color))}>Copy</button>
-        <button on:click={() => { centerColor = { ...color }; initialized = true; }}>Pick</button>
-        <button on:click={() => deleteColor(index)}>Delete</button>
+      <div class="saved-item" style="background-color: hsl({color.h}, {color.s}%, {color.l}%);">
+        <span class="saved-value">{convertToHex(color)}</span>
+        <button class="action-button" on:click={() => copyColor(convertToHex(color))}>Copy</button>
+        <button class="action-button" on:click={() => { centerColor = { ...color }; initialized = true; }}>Pick</button>
+        <button class="action-button" on:click={() => deleteColor(index)}>Delete</button>
       </div>
     {/each}
   </div>
   {#if savedColors.length > 0}
-    <div class="clear-button-container">
-      <button on:click={clearSavedColors}>Clear</button>
+    <div class="clear-panel">
+      <button class="action-button" on:click={clearSavedColors}>Clear</button>
     </div>
   {/if}
 </main>
