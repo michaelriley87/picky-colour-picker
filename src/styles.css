@@ -99,9 +99,8 @@
 .saved-item {
   display: flex;
   align-items: center;
-  height: 75px;
   gap: 5px;
-  padding: 5px;
+  padding: 30px;
   border-radius: 5px;
   user-select: none;
 }
@@ -109,16 +108,10 @@
 .action-button,
 .saved-value {
   font-size: 16px;
-  padding: 6px 12px;
-  border-radius: 4px;
-  background-color: #333333;
-  color: #e0e0e0;
-  border: 1px solid #555555;
+  padding: 4px 10px;
+  background: linear-gradient(to bottom, #f0f0f0, #dcdcdc);
+  color: black;
   cursor: pointer;
-}
-
-.action-button {
-  border: 1px solid #555555;
 }
 
 .clear-panel {
@@ -134,8 +127,9 @@
   }
 
   .hex-row {
-      margin-bottom: -25px;
+      margin-bottom: -27px;
       flex-wrap: wrap;
+      gap: 3px;
   }
 
   .header-container {
@@ -188,8 +182,9 @@
   }
 
   .hex-row {
-      margin-bottom: -15px;
-      flex-wrap: wrap;
+    margin-bottom: -18px;
+    flex-wrap: wrap;
+    gap: 2px;
   }
 
   .header-container {
